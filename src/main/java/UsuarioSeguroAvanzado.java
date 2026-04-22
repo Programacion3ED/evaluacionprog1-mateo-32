@@ -32,3 +32,34 @@ public int getIntentosFallidos () {
 public boolean isBloqueado () {
     return bloqueado;
 }
+public int getMaxIntentos () {
+    return maxIntentos;
+}
+public boolean isAccesoExitoso () {
+    return accesoExitoso;
+}
+
+public boolean autenticar(String passwordIngresada) {
+    if (this.bloqueado) {
+        return false;
+    }
+    if (this.password.equals(passwordIngresada)) {
+        this.intentosFallidos = 0;
+        this.accesoExitoso = true;
+        return true;
+    } else {
+        this.intentosFallidos++;
+        if (this.intentosFallidos >= this.maxIntentos) {
+            this.bloqueado = true;
+        }
+        return false;
+    }
+}
+public void reiniciarAcceso() {
+    this.intentosFallidos = 0;
+    this.bloqueado = false;
+}
+public boolean cambiarPassword(String actual, String nueva) {
+    if (this.bloqueado) {
+        return false;
+    }
